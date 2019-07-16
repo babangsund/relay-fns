@@ -6,7 +6,7 @@ import nodeResolve from "rollup-plugin-node-resolve"
 import pkg from "./package.json"
 
 const input = "src/index.js"
-const globals = { react: "React" }
+const globals = { react: "React", "react-relay": "ReactRelay" }
 const external = Object.keys(globals).concat("@babel/runtime")
 
 const base = {

@@ -21,7 +21,8 @@
     "@babel/runtime": "^7.5.4"
   },
   "peerDependencies": {
-    "react": "^16.8.6"
+    "react": "^16.8.6",
+    "react-relay": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
