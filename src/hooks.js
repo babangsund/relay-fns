@@ -74,13 +74,7 @@ export function useCreate(__typename: string) {
 }
 
 type UpdateConfig = {|
-  listArgs: any,
   dataID: ?string,
-  listName: string,
-  parentID: string,
-  rootField: string,
-  payloadName: ?string,
-  mutationName: ?string,
   input: {
     id: ?string
   }
@@ -89,15 +83,12 @@ type UpdateConfig = {|
 export function useUpdate() {
   const commit = useCommitMutation()
 
-  const makeOptimisticUpdater = React.useCallback(
-    ({ input = {}, dataID = input.id }: UpdateConfig) => {
-      return store => {
-        const node = store.get(dataID)
-        setValues(store, node, input)
-      }
-    },
-    []
-  )
+  const makeOptimisticUpdater = React.useCallback(({ input, dataID = input.id }: UpdateConfig) => {
+    return store => {
+      const node = store.get(dataID)
+      setValues(store, node, input)
+    }
+  }, [])
 
   return React.useCallback(
     (mutation, input, config = {}) => {

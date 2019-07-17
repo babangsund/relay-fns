@@ -1,6 +1,11 @@
 // @flow
 import * as React from "react"
 
+type EnvironmentProviderProps = {
+  environment: any,
+  children: React.Node
+}
+
 // TODO: Can we resolve environment to a proper type?
 export const EnvironmentContext = React.createContext<any>({})
 
@@ -14,11 +19,6 @@ export function withEnvironment<Config, Instance>(Component: React.AbstractCompo
       {context => <Component {...props} ref={ref} environment={context} />}
     </EnvironmentContext.Consumer>
   ))
-}
-
-type EnvironmentProviderProps = {
-  environment: any,
-  children: React.Node
 }
 
 export function EnvironmentProvider({ environment, children }: EnvironmentProviderProps) {
