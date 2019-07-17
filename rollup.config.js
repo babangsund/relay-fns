@@ -49,7 +49,7 @@ const umd = {
   output: {
     globals,
     format: "umd",
-    name: "ReactJsonEditor",
+    name: "RelayFns",
     file: `dist/index.umd.${process.env.NODE_ENV}.js`
   },
   plugins: makePlugins(process.env.NODE_ENV === "production", true)
