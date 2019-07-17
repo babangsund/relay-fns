@@ -2,6 +2,7 @@
   "name": "relay-fns",
   "version": "0.1.1",
   "description": "Relay functions",
+  "homepage": "https://github.com/babangsund/relay-fns",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "scripts": {
@@ -9,6 +10,7 @@
     "watch": "NODE_ENV=development rollup -c -w"
   },
   "keywords": [
+    "react",
     "relay",
     "functions"
   ],
