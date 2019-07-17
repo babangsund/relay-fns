@@ -1,5 +1,5 @@
 import babel from "rollup-plugin-babel"
-import { uglify } from "rollup-plugin-uglify"
+import { terser } from "rollup-plugin-terser"
 import commonjs from "rollup-plugin-commonjs"
 import nodeResolve from "rollup-plugin-node-resolve"
 
@@ -9,54 +9,50 @@ const input = "src/index.js"
 const globals = { react: "React", "react-relay": "ReactRelay" }
 const external = Object.keys(globals).concat("@babel/runtime")
 
-const base = {
-  input,
-  external
-}
+const base = { input, external }
 
-const output = {
-  globals
+function makePlugins(minify, useESModules) {
+  return [
+    babel({
+      runtimeHelpers: true,
+      exclude: "node_modules/**",
+      plugins: [["@babel/transform-runtime", { useESModules }]]
+    }),
+    nodeResolve(),
+    commonjs(),
+    minify && terser()
+  ]
 }
-
-const plugins = [
-  babel({
-    runtimeHelpers: true,
-    exclude: "node_modules/**",
-    plugins: [["@babel/transform-runtime", { useESModules: true }]]
-  }),
-  nodeResolve(),
-  commonjs()
-]
 
 const esm = {
   ...base,
   output: {
-    ...output,
+    globals,
     format: "esm",
     file: pkg.module
   },
-  plugins: [...plugins]
+  plugins: makePlugins(false, true)
 }
 
 const cjs = {
   ...base,
   output: {
-    ...output,
+    globals,
     format: "cjs",
     file: pkg.main
   },
-  plugins: [...plugins, uglify()]
+  plugins: makePlugins(true, false)
 }
 
 const umd = {
   ...base,
   output: {
-    ...output,
+    globals,
     format: "umd",
-    name: "RelayFns",
+    name: "ReactJsonEditor",
     file: `dist/index.umd.${process.env.NODE_ENV}.js`
   },
-  plugins: [...plugins, process.env.NODE_ENV === "production" && uglify()]
+  plugins: makePlugins(process.env.NODE_ENV === "production", true)
 }
 
 export default [umd, cjs, esm]
