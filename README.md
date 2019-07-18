@@ -284,6 +284,27 @@ class MyComponent extends React.Component {
 }
 ```
 ---
+#### Executables
+
+`realy-fns-enums`
+Parameters:
+* `--schema` Path to schema.graphql
+* `--output` Output file
+
+Add it to `scripts` in `package.json`
+Or run it from the terminal:
+
+    $ ./node_modules/.bin/relay-fns-enums --schema ./schema.graphql --output ./src/Enums.js
+
+
+It will generate a file with enums from your graphql schema.
+```javascript
+export const MyEnum = {
+  Enum1: "Enum1",
+  Enum2: "Enum2"
+}
+```
+---
 ### Credits
 
 Relay Functions is built and maintained by **babangsund**.
