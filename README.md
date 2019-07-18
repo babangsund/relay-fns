@@ -286,7 +286,7 @@ class MyComponent extends React.Component {
 ---
 #### Executables
 
-`realy-fns-enums`
+`relay-fns-enums`
 Parameters:
 * `--schema` Path to schema.graphql
 * `--output` Output file
