@@ -266,18 +266,21 @@ class MyComponent extends React.Component {
 * `pagination` = createPaginationContainer
 ```jsx
 import { fragment } from "relay-fns"
+
 @fragment({ todo: graphql`...` })
 class MyComponent extends React.Component {
 	...
 }
 
 import { refetch } from "relay-fns"
-@refetch({ todo: graphql`...` })
+
+@refetch({ todo: graphql`...` }, graphql``)
 class MyComponent extends React.Component {
 	...
 }
 
 import { pagination } from "relay-fns"
+
 @pagination({ query: graphql`...` }, { ...PaginationProps })
 class MyComponent extends React.Component {
 	...
