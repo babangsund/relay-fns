@@ -23,7 +23,6 @@ function makePlugins(minify, useESModules) {
     minify && terser()
   ]
 }
-
 const esm = {
   ...base,
   output: {
@@ -55,4 +54,15 @@ const umd = {
   plugins: makePlugins(process.env.NODE_ENV === "production", true)
 }
 
-export default [umd, cjs, esm]
+const bin = {
+  input: "./bin/enums.js",
+  external: ["fs", "yargs", "graphql/utilities", "graphql/type"],
+  output: {
+    format: "cjs",
+    banner: "#!/usr/bin/env node",
+    file: pkg.bin["relay-fns-enums"]
+  },
+  plugins: makePlugins(true, true)
+}
+
+export default [umd, cjs, esm, bin]

@@ -1,6 +1,6 @@
 {
   "name": "relay-fns",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Relay functions",
   "homepage": "https://github.com/babangsund/relay-fns",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
     "watch": "NODE_ENV=development rollup -c -w"
   },
   "bin": {
-    "relay-fns:enums": "./bin/generateEnums.js"
+    "relay-fns-enums": "./dist/bin/enums.js"
   },
   "keywords": [
     "react",
@@ -18,7 +18,6 @@
     "functions"
   ],
   "files": [
-    "bin",
     "dist"
   ],
   "author": "babangsund",
