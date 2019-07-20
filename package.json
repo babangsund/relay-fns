@@ -27,7 +27,7 @@
     "graphql": "^14.4.2"
   },
   "peerDependencies": {
-    "react": "^16.8.6",
+    "react": "^16.8.0",
     "react-relay": "^5.0.0"
   },
   "devDependencies": {

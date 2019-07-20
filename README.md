@@ -286,7 +286,9 @@ class MyComponent extends React.Component {
 	...
 }
 ```
+
 ---
+
 #### Executables
 
 `relay-fns-enums`
@@ -307,8 +309,16 @@ export const MyEnum = {
   Enum2: "Enum2"
 }
 ```
----
-### Credits
+
+## Development
+
+1. Clone the repository
+
+2. Install dependencies `npm|yarn install`
+
+3. Build and watch for changes `npm|yarn run watch`
+
+## Credits
 
 Relay Functions is built and maintained by **babangsund**.
 [@github](https://github.com/babangsund).
