@@ -127,8 +127,7 @@ class MyComponent extends React.Component {
 ```
 ---
 #### Create
-If you create an item, which resides in a list, that isn't a connection,
-relay is unable to put the item from the mutation payload, into your list.
+If you create an item which resides in a list that isn't a connection, Relay is unable to put the item from the mutation payload, into your list.
 
 To resolve the list, a config is required.
 * `listName` The name of the list in GraphQL
@@ -193,10 +192,10 @@ class MyComponent extends React.Component {
 ```
 ---
 #### Update
-If you update an item, waiting for the server to respond, isn't always necessary.
+If you update an item, waiting for the server to respond isn't always necessary.
 We may set the values on the object in the Relay Store optimistically.
 
-If `Id` is not included in your input, you will need to provide it, in the config, via the `dataID` property.
+If `Id` is not included in your input, you will need to provide it in the config, via the `dataID` property.
 ```jsx
 // With a hook
 import { useUpdate } from "relay-fns"
@@ -224,7 +223,7 @@ class MyComponent extends React.Component {
 ```
 ---
 #### Delete
-When you delete an item in a list, which is not a connection, the optimistic cleanup can be tedious.
+When you delete an item in a list which is not a connection, the optimistic cleanup can be tedious.
 This function provides you with this functionality.
 
 To resolve the list, a config is required.
