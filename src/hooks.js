@@ -19,8 +19,9 @@ export function useCommitMutation() {
           ...config,
           mutation,
           variables: { input },
-          onCompleted: (resp, errors) => {
-            if (errors || resp?.errors || resp[Object.keys(resp)].errors?.length) reject(errors)
+          onCompleted: (resp, es) => {
+            const errors = es || resp?.errors || resp[Object.keys(resp)].errors || []
+            if (errors.length) reject(errors)
             else resolve(resp)
           },
           onError: reject
