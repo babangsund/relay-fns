@@ -1,13 +1,13 @@
 // @flow
 import * as React from "react"
+import { IEnvironment } from "relay-runtime"
 
 type EnvironmentProviderProps = {
-  environment: any,
+  environment: IEnvironment,
   children: React.Node
 }
 
-// TODO: Can we resolve environment to a proper type?
-export const EnvironmentContext = React.createContext<any>({})
+export const EnvironmentContext = React.createContext<IEnvironment>({})
 
 export function useEnvironment() {
   return React.useContext(EnvironmentContext)

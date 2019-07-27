@@ -12,18 +12,18 @@ type Fragment = {
   [key: string]: string
 }
 
-export const fragment = (fragment: Fragment) => (Component: React.AbstractComponent<any>) => {
+export const fragment = (fragment: Fragment) => (Component: React.AbstractComponent<{}>) => {
   return createFragmentContainer(Component, fragment)
 }
 
 export const refetch = (fragment: Fragment, query: string) => (
-  Component: React.AbstractComponent<any>
+  Component: React.AbstractComponent<{}>
 ) => {
   return createRefetchContainer(Component, fragment, query)
 }
 
 export const pagination = (fragment: Fragment, config: Object) => (
-  Component: React.AbstractComponent<any>
+  Component: React.AbstractComponent<{}>
 ) => {
   return createPaginationContainer(Component, fragment, config)
 }

@@ -1,16 +1,27 @@
+// @flow
 import * as React from "react"
+import {} from "relay-runtime"
+import type { MutationType, Variables, MutationConfig, GraphQLTaggedNode } from "relay-runtime"
 import { fetchQuery, commitMutation } from "react-relay"
 
 import { useEnvironment } from "./context"
 
-export function useFetchQuery() {
+type UseFetchQuery = (query: GraphQLTaggedNode, variables: Variables) => Promise<{}>
+
+export function useFetchQuery(): UseFetchQuery {
   const environment = useEnvironment()
   return React.useCallback((query, variables) => fetchQuery(environment, query, variables), [
     environment
   ])
 }
 
-export function useCommitMutation() {
+type UseCommitMutation = (
+  mutation: MutationType,
+  input: {},
+  variables: MutationConfig
+) => Promise<{} | []>
+
+export function useCommitMutation(): UseCommitMutation {
   const environment = useEnvironment()
   return React.useCallback(
     (mutation, input, config) =>
@@ -32,15 +43,17 @@ export function useCommitMutation() {
 }
 
 type CreateConfig = {|
-  listArgs: any,
+  listArgs?: {},
   listName: string,
-  parentID: string,
-  rootField: string,
-  payloadName: ?string,
-  mutationName: ?string
+  parentID?: string,
+  rootField?: string,
+  payloadName?: string,
+  mutationName?: string
 |}
 
-export function useCreate(__typename: string) {
+type UseCreate = (mutation: MutationType, input: {}, config: CreateConfig) => Promise<any>
+
+export function useCreate(__typename: string): UseCreate {
   const commit = useCommitMutation()
 
   const makeUpdater = React.useCallback(
@@ -66,7 +79,7 @@ export function useCreate(__typename: string) {
   )
 
   return React.useCallback(
-    (mutation, input, config = {}) => {
+    (mutation, input, config) => {
       const updater = makeUpdater(config)
       return commit(mutation, input, { updater })
     },
@@ -75,18 +88,25 @@ export function useCreate(__typename: string) {
 }
 
 type UpdateConfig = {|
-  dataID: ?string,
+  dataID?: string,
   input: {
-    id: ?string
+    id?: string
   }
 |}
 
-export function useUpdate() {
+type UseUpdate = (
+  mutation: MutationType,
+  input: {| id?: string |},
+  config?: UpdateConfig
+) => Promise<any>
+
+export function useUpdate(): UseUpdate {
   const commit = useCommitMutation()
 
-  const makeOptimisticUpdater = React.useCallback(({ input, dataID = input.id }: UpdateConfig) => {
+  const makeOptimisticUpdater = React.useCallback(({ input, dataID }: UpdateConfig) => {
     return store => {
-      const node = store.get(dataID)
+      const id = dataID || input.id
+      const node = store.get(id)
       setValues(store, node, input)
     }
   }, [])
@@ -101,21 +121,27 @@ export function useUpdate() {
 }
 
 type DeleteConfig = {|
-  listArgs: any,
-  dataID: ?string,
+  listArgs?: {},
+  dataID?: string,
   listName: string,
-  parentID: string,
-  rootField: string,
+  parentID?: string,
+  rootField?: string,
   input: {
-    id: ?string
+    id?: string
   }
 |}
 
-export function useDelete() {
+type UseDelete = (
+  mutation: MutationType,
+  input: {| id?: string |},
+  config: DeleteConfig
+) => Promise<any>
+
+export function useDelete(): UseDelete {
   const commit = useCommitMutation()
 
   const makeUpdater = React.useCallback(
-    ({ input, dataID = input.id, listName, listArgs, parentID, rootField }: DeleteConfig) => {
+    ({ input, dataID = input.id || "", listName, listArgs, parentID, rootField }: DeleteConfig) => {
       return store => {
         const parent = store.get(parentID) || store.getRoot().getLinkedRecord(rootField)
         const nodes = parent.getLinkedRecords(listName, listArgs) || []
@@ -130,7 +156,7 @@ export function useDelete() {
   )
 
   return React.useCallback(
-    (mutation, input, config = {}) => {
+    (mutation, input, config) => {
       const updater = makeUpdater({ input, ...config })
       return commit(mutation, input, { updater, optimisticUpdater: updater })
     },
@@ -140,11 +166,11 @@ export function useDelete() {
 
 let tempId = 0
 
-export function isPrimitive(value) {
+export function isPrimitive(value: any) {
   return value !== Object(value)
 }
 
-export function isPlainObject(obj) {
+export function isPlainObject(obj: ?{}) {
   return obj && typeof obj === "object" && obj.constructor === Object
 }
 
@@ -152,7 +178,7 @@ function guessType(str) {
   return str.charAt(0).toUpperCase() + str.substr(1, str.length - 2)
 }
 
-function scalarInput(input) {
+function scalarInput(input: {}) {
   return Object.keys(input).reduce((acc, curr) => {
     const _acc = acc
     const value = input[curr]
