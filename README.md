@@ -319,6 +319,7 @@ export const MyEnum = {
 
 ## Credits
 
-Relay Functions is built and maintained by **babangsund**.
+Relay Functions is built and maintained by **babangsund**.  
+[@blog](https://babangsund.com/).
 [@github](https://github.com/babangsund).
 [@twitter](https://twitter.com/babangsund).
