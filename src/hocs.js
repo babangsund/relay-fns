@@ -1,12 +1,20 @@
 // @flow
 import * as React from "react"
+
 import {
   createRefetchContainer,
   createFragmentContainer,
   createPaginationContainer
 } from "react-relay"
 
-import { useCreate, useUpdate, useDelete, useFetchQuery, useCommitMutation } from "./hooks"
+import {
+  useCreate,
+  useUpdate,
+  useDelete,
+  useFetchQuery,
+  useLocalCommit,
+  useCommitMutation
+} from "./hooks"
 
 type Fragment = {
   [key: string]: string
@@ -39,6 +47,13 @@ export function withCommitMutation<Config, Instance>(Component: React.AbstractCo
   return React.forwardRef<Config, Instance>((props, ref) => {
     const commitMutation = useCommitMutation()
     return <Component {...props} ref={ref} commitMutation={commitMutation} />
+  })
+}
+
+export function withLocalCommit<Config, Instance>(Component: React.AbstractComponent<Config>) {
+  return React.forwardRef<Config, Instance>((props, ref) => {
+    const localCommit = useLocalCommit()
+    return <Component {...props} ref={ref} localCommit={localCommit} />
   })
 }
 

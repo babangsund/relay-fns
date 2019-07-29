@@ -1,8 +1,13 @@
 // @flow
 import * as React from "react"
-import {} from "relay-runtime"
-import type { MutationType, Variables, MutationConfig, GraphQLTaggedNode } from "relay-runtime"
-import { fetchQuery, commitMutation } from "react-relay"
+import { fetchQuery, commitMutation, commitLocalUpdate } from "react-relay"
+import type {
+  MutationType,
+  Variables,
+  MutationConfig,
+  GraphQLTaggedNode,
+  StoreUpdater
+} from "relay-runtime"
 
 import { useEnvironment } from "./context"
 
@@ -13,6 +18,13 @@ export function useFetchQuery(): UseFetchQuery {
   return React.useCallback((query, variables) => fetchQuery(environment, query, variables), [
     environment
   ])
+}
+
+type UseLocalCommit = (updater: StoreUpdater) => void
+
+export function useLocalCommit(): UseLocalCommit {
+  const environment = useEnvironment()
+  return React.useCallback(updater => commitLocalUpdate(environment, updater), [environment])
 }
 
 type UseCommitMutation = (
