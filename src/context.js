@@ -1,6 +1,6 @@
 // @flow
 import * as React from "react"
-import { IEnvironment } from "relay-runtime"
+import type { IEnvironment } from "relay-runtime"
 
 type EnvironmentProviderProps = {
   environment: IEnvironment,
