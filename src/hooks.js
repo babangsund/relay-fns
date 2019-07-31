@@ -41,7 +41,7 @@ export function useCommitMutation(): UseCommitMutation {
         commitMutation(environment, {
           ...config,
           mutation,
-          variables: { input },
+          variables: { input, ...(config.variables || {}) },
           onCompleted: (resp, es) => {
             const errors = es || resp?.errors || resp[Object.keys(resp)].errors || []
             if (errors.length) reject(errors)
