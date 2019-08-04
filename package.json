@@ -1,6 +1,6 @@
 {
   "name": "relay-fns",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Relay functions",
   "homepage": "https://github.com/babangsund/relay-fns",
   "main": "dist/index.js",
@@ -23,8 +23,10 @@
   "author": "babangsund",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "graphql": "^14.4.2",
+    "@babel/runtime": "^7.0.0"
+  },
+  "peerDependencies": {
+    "graphql": "^14.0.0",
     "react": "^16.8.0",
     "react-relay": "^5.0.0",
     "relay-runtime": "^5.0.0"
