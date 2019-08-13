@@ -12,6 +12,20 @@ const globals = {
   'relay-runtime': 'RelayRuntime',
 };
 const external = Object.keys(globals).concat('@babel/runtime');
+const license = {
+  output: {
+    preamble: [
+      '/**',
+      ' * relay-fns v' + process.env.npm_package_version,
+      ' *',
+      ' * Copyright (c) 2019 babangsund',
+      ' *',
+      ' * This source code is licensed under the MIT license found in the',
+      ' * LICENSE file in the root directory of this source tree.',
+      ' */',
+    ].join('\n'),
+  },
+};
 
 const plugins = [
   babel({
@@ -21,7 +35,7 @@ const plugins = [
   }),
   nodeResolve(),
   commonjs(),
-  process.env.NODE_ENV === 'production' && terser(),
+  process.env.NODE_ENV === 'production' && terser(license),
 ];
 
 export default [
