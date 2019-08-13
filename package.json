@@ -1,6 +1,6 @@
 {
   "name": "relay-fns",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Relay functions",
   "homepage": "https://github.com/babangsund/relay-fns",
   "main": "dist/index.js",
