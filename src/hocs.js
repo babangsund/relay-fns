@@ -1,93 +1,93 @@
 // @flow
-import * as React from 'react';
 
+'use strict';
+
+import type {AbstractComponent} from 'react';
+import type {
+  $RelayProps,
+  RelayRefetchProp,
+  GeneratedNodeMap,
+  RelayPaginationProp,
+} from 'react-relay';
+import type {
+  RelayProp,
+  ConnectionConfig,
+  GraphQLTaggedNode,
+} from 'relay-runtime';
 import {
   createRefetchContainer,
   createFragmentContainer,
   createPaginationContainer,
 } from 'react-relay';
 
-import {
-  useCreate,
-  useUpdate,
-  useDelete,
-  useFetchQuery,
-  useLocalCommit,
-  useCommitMutation,
-} from './hooks';
-
-type Fragment = {
-  [key: string]: string,
-};
-
-export const fragment = (fragment: Fragment) => (
-  Component: React.AbstractComponent<{}>,
-) => {
-  return createFragmentContainer(Component, fragment);
-};
-
-export const refetch = (fragment: Fragment, query: string) => (
-  Component: React.AbstractComponent<{}>,
-) => {
-  return createRefetchContainer(Component, fragment, query);
-};
-
-export const pagination = (fragment: Fragment, config: Object) => (
-  Component: React.AbstractComponent<{}>,
-) => {
-  return createPaginationContainer(Component, fragment, config);
-};
-
-export function withFetchQuery<Config, Instance>(
-  Component: React.AbstractComponent<Config>,
-) {
-  return React.forwardRef<Config, Instance>((props, ref) => {
-    const fetchQuery = useFetchQuery();
-    return <Component {...props} ref={ref} fetchQuery={fetchQuery} />;
-  });
-}
-
-export function withCommitMutation<Config, Instance>(
-  Component: React.AbstractComponent<Config>,
-) {
-  return React.forwardRef<Config, Instance>((props, ref) => {
-    const commitMutation = useCommitMutation();
-    return <Component {...props} ref={ref} commitMutation={commitMutation} />;
-  });
-}
-
-export function withLocalCommit<Config, Instance>(
-  Component: React.AbstractComponent<Config>,
-) {
-  return React.forwardRef<Config, Instance>((props, ref) => {
-    const localCommit = useLocalCommit();
-    return <Component {...props} ref={ref} localCommit={localCommit} />;
-  });
-}
-
-export function withCreate<Config, Instance>(__typename: string) {
-  return (Component: React.AbstractComponent<Config>) => {
-    return React.forwardRef<Config, Instance>((props, ref) => {
-      const commitMutation = useCreate(__typename);
-      return <Component {...props} ref={ref} create={commitMutation} />;
-    });
+/**
+ * @public
+ *
+ * createFragmentContainer as an HOC
+ * Example usage:
+ *
+ * @createFragmentContainer(fragment)
+ * class MyComponent extends React.Component { ... }
+ */
+export function fragment(fragment: GeneratedNodeMap) {
+  return function<
+    Props: {},
+    Instance,
+    TComponent: AbstractComponent<Props, Instance>,
+  >(
+    Component: TComponent,
+  ): AbstractComponent<
+    $RelayProps<React$ElementConfig<TComponent>, RelayProp>,
+  > {
+    return createFragmentContainer(Component, fragment);
   };
 }
 
-export function withUpdate<Config, Instance>(
-  Component: React.AbstractComponent<Config>,
-) {
-  return React.forwardRef<Config, Instance>((props, ref) => {
-    const commitMutation = useUpdate();
-    return <Component {...props} ref={ref} update={commitMutation} />;
-  });
+/**
+ * @public
+ *
+ * createRefetchContainer as an HOC
+ * Example usage:
+ *
+ * @createRefetchContainer(fragment, query)
+ * class MyComponent extends React.Component { ... }
+ */
+export function refetch(fragment: GeneratedNodeMap, query: GraphQLTaggedNode) {
+  return function<
+    Props: {},
+    Instance,
+    TComponent: AbstractComponent<Props, Instance>,
+  >(
+    Component: TComponent,
+  ): AbstractComponent<
+    $RelayProps<React$ElementConfig<TComponent>, RelayRefetchProp>,
+  > {
+    return createRefetchContainer(Component, fragment, query);
+  };
 }
 
-export function withDelete<Config, Instance>(
-  Component: React.AbstractComponent<Config>,
+/**
+ * @public
+ *
+ * createPaginationContainer as an HOC
+ * Example usage:
+ *
+ * @createPaginationContainer(fragment, config)
+ * class MyComponent extends React.Component { ... }
+ */
+export function pagination(
+  fragment: GeneratedNodeMap,
+  config: ConnectionConfig,
 ) {
-  return React.forwardRef<Config, Instance>((props, ref) => {
-    const commitMutation = useDelete();
-    return <Component {...props} ref={ref} delete={commitMutation} />;
-  });
+  return function<
+    Props: {},
+    Instance,
+    TComponent: AbstractComponent<Props, Instance>,
+  >(
+    Component: TComponent,
+  ): AbstractComponent<
+    $RelayProps<React$ElementConfig<TComponent>, RelayPaginationProp>,
+  > {
+    return createPaginationContainer(Component, fragment, config);
+  };
 }
