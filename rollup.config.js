@@ -6,63 +6,56 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import pkg from './package.json';
 
 const input = 'src/index.js';
-const globals = {react: 'React', 'react-relay': 'ReactRelay'};
+const globals = {
+  react: 'React',
+  'react-relay': 'ReactRelay',
+  'relay-runtime': 'RelayRuntime',
+};
 const external = Object.keys(globals).concat('@babel/runtime');
 
-const base = {input, external};
+const plugins = [
+  babel({
+    runtimeHelpers: true,
+    exclude: 'node_modules/**',
+    plugins: [['@babel/transform-runtime', {useESModules: true}]],
+  }),
+  nodeResolve(),
+  commonjs(),
+  process.env.NODE_ENV === 'production' && terser(),
+];
 
-function makePlugins(minify, useESModules) {
-  return [
-    babel({
-      runtimeHelpers: true,
-      exclude: 'node_modules/**',
-      plugins: [['@babel/transform-runtime', {useESModules}]],
-    }),
-    nodeResolve(),
-    commonjs(),
-    minify && terser(),
-  ];
-}
-const esm = {
-  ...base,
-  output: {
-    globals,
-    format: 'esm',
-    file: pkg.module,
+export default [
+  {
+    input,
+    external,
+    plugins,
+    output: [
+      {
+        globals,
+        format: 'esm',
+        file: pkg.module,
+      },
+      {
+        globals,
+        format: 'cjs',
+        file: pkg.main,
+      },
+      {
+        globals,
+        format: 'umd',
+        name: 'RelayFns',
+        file: `dist/index.umd.${process.env.NODE_ENV}.js`,
+      },
+    ],
   },
-  plugins: makePlugins(false, true),
-};
-
-const cjs = {
-  ...base,
-  output: {
-    globals,
-    format: 'cjs',
-    file: pkg.main,
+  {
+    plugins,
+    input: './bin/enums.js',
+    external: ['fs', 'yargs', 'graphql/utilities', 'graphql/type'],
+    output: {
+      format: 'cjs',
+      banner: '#!/usr/bin/env node',
+      file: pkg.bin['relay-fns-enums'],
+    },
   },
-  plugins: makePlugins(true, false),
-};
-
-const umd = {
-  ...base,
-  output: {
-    globals,
-    format: 'umd',
-    name: 'RelayFns',
-    file: `dist/index.umd.${process.env.NODE_ENV}.js`,
-  },
-  plugins: makePlugins(process.env.NODE_ENV === 'production', true),
-};
-
-const bin = {
-  input: './bin/enums.js',
-  external: ['fs', 'yargs', 'graphql/utilities', 'graphql/type'],
-  output: {
-    format: 'cjs',
-    banner: '#!/usr/bin/env node',
-    file: pkg.bin['relay-fns-enums'],
-  },
-  plugins: makePlugins(true, true),
-};
-
-export default [umd, cjs, esm, bin];
+];
