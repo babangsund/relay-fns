@@ -1,4 +1,5 @@
 // @flow
+
 import * as React from "react"
 import { fetchQuery, commitMutation, commitLocalUpdate } from "react-relay"
 import type {
@@ -176,7 +177,7 @@ export function useDelete(): UseDelete {
   )
 }
 
-let tempId = 0
+let tempID = 0
 
 export function isPrimitive(value: any) {
   return value !== Object(value)
@@ -210,11 +211,12 @@ function setValues(store, node, input) {
   Object.keys(input).forEach(key => {
     const value = input[key]
     if (isPrimitive(value)) node.setValue(value, key)
-    else if (Array.isArray(value) && isPrimitive(value[0])) node.setValue(value, key)
-    else if (Array.isArray(value)) {
+    else if (Array.isArray(value) && (isPrimitive(value[0]) || !value.length)) {
+      node.setValue(value, key)
+    } else if (Array.isArray(value)) {
       const type = guessType(key)
       const records = value.map(x => {
-        const record = store.create(`client:${type}:${tempId++}`, type)
+        const record = store.create(`client:${type}:${tempID++}`, type)
         Object.keys(x).forEach(key => record.setValue(x[key], key))
         return record
       })
