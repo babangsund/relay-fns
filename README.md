@@ -24,7 +24,8 @@ const useCommitMutation = require("relay-fns").useCommitMutation
 
 ## Usage
 
-It is required to pass down the [Environment](https://relay.dev/docs/en/relay-environment) via Context on the top-level.
+It is required to pass down the [Environment](https://relay.dev/docs/en/relay-environment) via Context on the top-level.  
+Why? Passing environment as a parameter to every function polludes the API.
 
 ```jsx
 import { EnvironmentProvider } from "relay-fns"
@@ -59,6 +60,7 @@ import { withEnvironment } from "relay-fns"
 class MyComponent extends React.Component {
 	render() {
 		return (
+      // this.props.environment
 			// Use Environment for something
 		)
 	}
@@ -119,7 +121,7 @@ import { withCommitMutation } from "relay-fns"
 @withCommitMutation
 class MyComponent extends React.Component {
 	runSomeMutation() {
-		commitMutation(MUTATION, INPUT, CONFIG)
+		this.props.commitMutation(MUTATION, INPUT, CONFIG)
 			.then(() => console.log("Well done!"))
 			.catch(() => console.error("You broke it!"))
 	}
@@ -167,10 +169,10 @@ The config would look like this:
 In practice, it could be used like this:
 ```jsx
 // With a hook
-import { useCreate } from "relay-fns"
+import { useCreateMutation } from "relay-fns"
 
 function MyComponent() {
-	const createTodo = useCreate("Todo");
+	const createTodo = useCreateMutation("Todo");
 	function runSomeMutation(input) {
 		createTodo(MUTATION, input, CONFIG)
 			.then(() => console.log("Todo created"))
@@ -179,12 +181,12 @@ function MyComponent() {
 }
 
 // With a hoc
-import { withCreate } from "relay-fns"
+import { withCreateMutation } from "relay-fns"
 
-@withCreate("Todo")
+@withCreateMutation("Todo")
 class MyComponent extends React.Component {
 	runSomeMutation(input) {
-		createTodo(MUTATION, input, CONFIG)
+		this.props.createMutation(MUTATION, input, CONFIG)
 			.then(() => console.log("Todo created"))
 			.catch(() => console.error("Failed to create todo"))
 	}
@@ -198,10 +200,10 @@ We may set the values on the object in the Relay Store optimistically.
 If `Id` is not included in your input, you will need to provide it in the config, via the `dataID` property.
 ```jsx
 // With a hook
-import { useUpdate } from "relay-fns"
+import { useUpdateMutation } from "relay-fns"
 
 function MyComponent() {
-	const updateTodo = useUpdate("Todo");
+	const updateTodo = useUpdateMutation("Todo");
 	function runSomeMutation(input) {
 		updateTodo(MUTATION, input, CONFIG)
 			.then(() => console.log("Todo updated"))
@@ -215,7 +217,7 @@ import { withUpdate } from "relay-fns"
 @withUpdate("Todo")
 class MyComponent extends React.Component {
 	runSomeMutation(input) {
-		updateTodo(MUTATION, input, CONFIG)
+		this.props.updateMutation(MUTATION, input, CONFIG)
 			.then(() => console.log("Todo updated"))
 			.catch(() => console.error("Failed to update todo"))
 	}
@@ -235,10 +237,10 @@ To resolve the list, a config is required.
 
 ```jsx
 // With a hook
-import { useDelete } from "relay-fns"
+import { useDeleteMutation } from "relay-fns"
 
 function MyComponent() {
-	const deleteTodo = useDelete("Todo");
+	const deleteTodo = useDeleteMutation("Todo");
 	function runSomeMutation(input) {
 		deleteTodo(MUTATION, input, CONFIG)
 			.then(() => console.log("Todo deleted"))
@@ -252,7 +254,7 @@ import { withDelete } from "relay-fns"
 @withDelete("Todo")
 class MyComponent extends React.Component {
 	runSomeMutation(input) {
-		deleteTodo(MUTATION, input, CONFIG)
+		this.props.deleteMutation(MUTATION, input, CONFIG)
 			.then(() => console.log("Todo deleted"))
 			.catch(() => console.error("Failed to delete todo"))
 	}
@@ -263,6 +265,7 @@ class MyComponent extends React.Component {
 * `fragment` = createFragmentContainer
 * `refetch` = createRefetchContainer
 * `pagination` = createPaginationContainer
+
 ```jsx
 import { fragment } from "relay-fns"
 
@@ -319,7 +322,8 @@ export const MyEnum = {
 
 ## Credits
 
-Relay Functions is built and maintained by **babangsund**.  
-[@blog](https://babangsund.com/).
-[@github](https://github.com/babangsund).
-[@twitter](https://twitter.com/babangsund).
+relay-fns is built and maintained by **babangsund**.
+
+[@blog](https://babangsund.com/).  
+[@github](https://github.com/babangsund).  
+[@twitter](https://twitter.com/babangsund).  
