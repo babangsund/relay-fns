@@ -76,7 +76,7 @@ export function withUpdateMutation<Config, Instance>(
 /**
  * @internal
  *
- * Utility functions for setting input on a record
+ * Utility functions for setting primitive input values on a record
  */
 
 function isPrimitive(value: any) {
@@ -87,42 +87,32 @@ function isPlainObject(obj: ?{}) {
   return obj && typeof obj === 'object' && obj.constructor === Object;
 }
 
-function guessType(str) {
-  return str.charAt(0).toUpperCase() + str.substr(1, str.length - 2);
-}
-
 function scalarInput(input: {}) {
   return Object.keys(input).reduce((acc, curr) => {
     const _acc = acc;
     const value = input[curr];
 
-    if (value === undefined) return _acc;
-    if (typeof value === 'string' && curr.endsWith('Id')) return _acc;
+    if (
+      value === undefined ||
+      Array.isArray(value) ||
+      (typeof value === 'string' && curr.endsWith('Id'))
+    )
+      return _acc;
 
     if (isPlainObject(value)) input[curr] = scalarInput(value);
     if (value instanceof Date) input[curr] = value.toUTCString();
+
     _acc[curr] = input[curr];
     return _acc;
   }, {});
 }
 
-let tempID = 0;
 function setValues(store, node, input) {
   input = scalarInput(input);
   Object.keys(input).forEach(key => {
     const value = input[key];
     if (isPrimitive(value)) node.setValue(value, key);
-    else if (Array.isArray(value) && (isPrimitive(value[0]) || !value.length)) {
-      node.setValue(value, key);
-    } else if (Array.isArray(value)) {
-      const type = guessType(key);
-      const records = value.map(x => {
-        const record = store.create(`client:${type}:${tempID++}`, type);
-        Object.keys(x).forEach(key => record.setValue(x[key], key));
-        return record;
-      });
-      node.setLinkedRecords(records, key);
-    } else if (isPlainObject(value)) {
+    else if (isPlainObject(value)) {
       Object.keys(value).forEach(nestedKey => {
         const nestedNode = node.getOrCreateLinkedRecord(
           key,
