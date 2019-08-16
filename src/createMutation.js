@@ -72,7 +72,7 @@ export function useCreateMutation(__typename: string): CreateMutation {
   return React.useCallback(
     (mutation, input, config) => {
       const updater = makeUpdater(config);
-      return commit(mutation, input, {updater});
+      return commit(mutation, input, {...config, updater});
     },
     [commit, makeUpdater],
   );

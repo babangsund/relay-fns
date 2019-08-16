@@ -74,7 +74,11 @@ export function useDeleteMutation(): DeleteMutation {
   return React.useCallback(
     (mutation, input, config) => {
       const updater = makeUpdater({input, ...config});
-      return commit(mutation, input, {updater, optimisticUpdater: updater});
+      return commit(mutation, input, {
+        ...config,
+        updater,
+        optimisticUpdater: updater,
+      });
     },
     [commit, makeUpdater],
   );
