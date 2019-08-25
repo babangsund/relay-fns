@@ -24,6 +24,17 @@ const useCommitMutation = require("relay-fns").useCommitMutation
 
 ## Usage
 
+* [Environment](#injecting-environment)
+* [fetchQuery](#fetchquery)
+* [commitMutation](#commitmutation)
+* [createMutation](#create)
+* [updateMutation](#update)
+* [deleteMutation](#delete)
+* [HOCs](#utility-hocs)
+* [Executables](#executables)
+
+---
+
 It is required to pass down the [Environment](https://relay.dev/docs/en/relay-environment) via Context on the top-level.  
 Why? Passing environment as a parameter to every function polludes the API.
 
