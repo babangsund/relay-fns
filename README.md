@@ -294,7 +294,7 @@ class MyComponent extends React.Component {
 
 import { pagination } from "relay-fns"
 
-@pagination({ query: graphql`...` }, { ...PaginationProps })
+@pagination({ todo: graphql`...` }, { ...PaginationProps })
 class MyComponent extends React.Component {
 	...
 }
