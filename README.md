@@ -17,9 +17,9 @@ Then with a module bundler like [webpack](https://webpack.github.io/), use as yo
 
 ```js
 // Using ES6 Modules
-import { useCommitMutation } from "relay-fns"
+import {useCommitMutation} from 'relay-fns';
 // using CommonJS modules
-const useCommitMutation = require("relay-fns").useCommitMutation
+const useCommitMutation = require('relay-fns').useCommitMutation;
 ```
 
 ## Usage
@@ -39,15 +39,15 @@ It is required to pass down the [Environment](https://relay.dev/docs/en/relay-en
 Why? Passing environment as a parameter to every function polludes the API.
 
 ```jsx
-import { EnvironmentProvider } from "relay-fns"
-import MyApp from "./MyApp"
+import {EnvironmentProvider} from 'relay-fns';
+import MyApp from './MyApp';
 
 function MyAppContext({children}) {
-	return (
-		<EnvironmentProvider environment={environment}>
-			<MyApp />
-		</EnvironmentProvider>
-	)
+  return (
+    <EnvironmentProvider environment={environment}>
+      <MyApp />
+    </EnvironmentProvider>
+  );
 }
 ```
 ---
@@ -55,26 +55,26 @@ function MyAppContext({children}) {
 
 ```jsx
 // With a hook
-import { useEnvironment } from "relay-fns"
+import {useEnvironment} from 'relay-fns';
 
 function MyComponent() {
-	const environment = useEnvironment();
-	return (
-		// Use Environment for something
-	)
+  const environment = useEnvironment();
+  return (
+    // Use Environment for something
+  );
 }
 
 // With a hoc
-import { withEnvironment } from "relay-fns"
+import {withEnvironment} from 'relay-fns';
 
 @withEnvironment
 class MyComponent extends React.Component {
-	render() {
-		return (
+  render() {
+    return (
       // this.props.environment
-			// Use Environment for something
-		)
-	}
+      // Use Environment for something
+    );
+  }
 }
 ```
 ---
@@ -83,25 +83,25 @@ Provides FetchQuery with Environment pre-applied.
 
 ```jsx
 // With a hook
-import { useFetchQuery } from "relay-fns"
+import {useFetchQuery} from 'relay-fns';
 
 function MyComponent() {
-	const fetchQuery = useFetchQuery();
-	useEffect(() => {
-		// Fetch some data
-		fetchQuery(QUERY, VARIABLEs)
-	})
+  const fetchQuery = useFetchQuery();
+  useEffect(() => {
+    // Fetch some data
+    fetchQuery(QUERY, VARIABLEs);
+  });
 }
 
 // With a hoc
-import { withFetchQuery } from "relay-fns"
+import {withFetchQuery} from 'relay-fns';
 
 @withFetchQuery
 class MyComponent extends React.Component {
-	componentDidMount() {
-		// Fetch some data
-		this.props.fetchQuery(QUERY, VARIABLES)
-	}
+  componentDidMount() {
+    // Fetch some data
+    this.props.fetchQuery(QUERY, VARIABLES);
+  }
 }
 ```
 ---
@@ -115,27 +115,28 @@ The promise is rejected if:
 
 ```jsx
 // With a hook
-import { useCommitMutation } from "relay-fns"
+import {useCommitMutation} from 'relay-fns';
 
 function MyComponent() {
-	const commitMutation = useCommitMutation();
-	function runSomeMutation() {
-		commitMutation(MUTATION, INPUT, CONFIG)
-			.then(() => console.log("Well done!"))
-			.catch(() => console.error("You broke it!"))
-	}
+  const commitMutation = useCommitMutation();
+  function runSomeMutation() {
+    commitMutation(MUTATION, INPUT, CONFIG)
+      .then(() => console.log('Well done!'))
+      .catch(() => console.error('You broke it!'));
+  }
 }
 
 // With a hoc
-import { withCommitMutation } from "relay-fns"
+import {withCommitMutation} from 'relay-fns';
 
 @withCommitMutation
 class MyComponent extends React.Component {
-	runSomeMutation() {
-		this.props.commitMutation(MUTATION, INPUT, CONFIG)
-			.then(() => console.log("Well done!"))
-			.catch(() => console.error("You broke it!"))
-	}
+  runSomeMutation() {
+    this.props
+      .commitMutation(MUTATION, INPUT, CONFIG)
+      .then(() => console.log('Well done!'))
+      .catch(() => console.error('You broke it!'));
+  }
 }
 ```
 ---
@@ -180,27 +181,28 @@ The config would look like this:
 In practice, it could be used like this:
 ```jsx
 // With a hook
-import { useCreateMutation } from "relay-fns"
+import {useCreateMutation} from 'relay-fns';
 
 function MyComponent() {
-	const createTodo = useCreateMutation("Todo");
-	function runSomeMutation(input) {
-		createTodo(MUTATION, input, CONFIG)
-			.then(() => console.log("Todo created"))
-			.catch(() => console.error("Failed to create todo"))
-	}
+  const createTodo = useCreateMutation('Todo');
+  function runSomeMutation(input) {
+    createTodo(MUTATION, input, CONFIG)
+      .then(() => console.log('Todo created'))
+      .catch(() => console.error('Failed to create todo'));
+  }
 }
 
 // With a hoc
-import { withCreateMutation } from "relay-fns"
+import {withCreateMutation} from 'relay-fns';
 
 @withCreateMutation("Todo")
 class MyComponent extends React.Component {
-	runSomeMutation(input) {
-		this.props.createMutation(MUTATION, input, CONFIG)
-			.then(() => console.log("Todo created"))
-			.catch(() => console.error("Failed to create todo"))
-	}
+  runSomeMutation(input) {
+    this.props
+      .createMutation(MUTATION, input, CONFIG)
+      .then(() => console.log('Todo created'))
+      .catch(() => console.error('Failed to create todo'));
+  }
 }
 ```
 ---
@@ -211,27 +213,28 @@ We may set the values on the object in the Relay Store optimistically.
 If `Id` is not included in your input, you will need to provide it in the config, via the `dataID` property.
 ```jsx
 // With a hook
-import { useUpdateMutation } from "relay-fns"
+import {useUpdateMutation} from 'relay-fns';
 
 function MyComponent() {
-	const updateTodo = useUpdateMutation("Todo");
-	function runSomeMutation(input) {
-		updateTodo(MUTATION, input, CONFIG)
-			.then(() => console.log("Todo updated"))
-			.catch(() => console.error("Failed to update todo"))
-	}
+  const updateTodo = useUpdateMutation('Todo');
+  function runSomeMutation(input) {
+    updateTodo(MUTATION, input, CONFIG)
+      .then(() => console.log('Todo updated'))
+      .catch(() => console.error('Failed to update todo'));
+  }
 }
 
 // With a hoc
-import { withUpdateMutation } from "relay-fns"
+import {withUpdateMutation} from 'relay-fns';
 
 @withUpdateMutation("Todo")
 class MyComponent extends React.Component {
-	runSomeMutation(input) {
-		this.props.updateMutation(MUTATION, input, CONFIG)
-			.then(() => console.log("Todo updated"))
-			.catch(() => console.error("Failed to update todo"))
-	}
+  runSomeMutation(input) {
+    this.props
+      .updateMutation(MUTATION, input, CONFIG)
+      .then(() => console.log('Todo updated'))
+      .catch(() => console.error('Failed to update todo'));
+  }
 }
 ```
 ---
@@ -248,27 +251,28 @@ To resolve the list, a config is required.
 
 ```jsx
 // With a hook
-import { useDeleteMutation } from "relay-fns"
+import {useDeleteMutation} from 'relay-fns';
 
 function MyComponent() {
-	const deleteTodo = useDeleteMutation("Todo");
-	function runSomeMutation(input) {
-		deleteTodo(MUTATION, input, CONFIG)
-			.then(() => console.log("Todo deleted"))
-			.catch(() => console.error("Failed to delete todo"))
-	}
+  const deleteTodo = useDeleteMutation('Todo');
+  function runSomeMutation(input) {
+    deleteTodo(MUTATION, input, CONFIG)
+      .then(() => console.log('Todo deleted'))
+      .catch(() => console.error('Failed to delete todo'));
+  }
 }
 
 // With a hoc
-import { withDeleteMutation } from "relay-fns"
+import {withDeleteMutation} from 'relay-fns';
 
 @withDeleteMutation("Todo")
 class MyComponent extends React.Component {
-	runSomeMutation(input) {
-		this.props.deleteMutation(MUTATION, input, CONFIG)
-			.then(() => console.log("Todo deleted"))
-			.catch(() => console.error("Failed to delete todo"))
-	}
+  runSomeMutation(input) {
+    this.props
+      .deleteMutation(MUTATION, input, CONFIG)
+      .then(() => console.log('Todo deleted'))
+      .catch(() => console.error('Failed to delete todo'));
+  }
 }
 ```
 ---
@@ -278,25 +282,25 @@ class MyComponent extends React.Component {
 * `pagination` = createPaginationContainer
 
 ```jsx
-import { fragment } from "relay-fns"
+import {fragment} from 'relay-fns';
 
 @fragment({ todo: graphql`...` })
 class MyComponent extends React.Component {
-	...
+  ...
 }
 
-import { refetch } from "relay-fns"
+import {refetch} from 'relay-fns';
 
 @refetch({ todo: graphql`...` }, graphql``)
 class MyComponent extends React.Component {
-	...
+  ...
 }
 
-import { pagination } from "relay-fns"
+import {pagination} from 'relay-fns';
 
 @pagination({ todo: graphql`...` }, { ...PaginationProps })
 class MyComponent extends React.Component {
-	...
+  ...
 }
 ```
 
@@ -318,9 +322,9 @@ Or run it from the terminal:
 It will generate a file with enums from your graphql schema.
 ```javascript
 export const MyEnum = {
-  Enum1: "Enum1",
-  Enum2: "Enum2"
-}
+  Enum1: 'Enum1',
+  Enum2: 'Enum2',
+};
 ```
 
 ## Development
