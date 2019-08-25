@@ -1,27 +1,29 @@
-"use strict"
+'use strict';
 
-function main({ schema, output }) {
-  const fs = require("fs")
-  const utils = require("graphql/utilities")
-  const isEnumType = require("graphql/type").isEnumType
+function main({schema, output}) {
+  const fs = require('fs');
+  const utils = require('graphql/utilities');
+  const isEnumType = require('graphql/type').isEnumType;
 
-  console.info(schema, output)
+  console.info(schema, output);
 
-  const typeMap = utils.buildSchema(fs.readFileSync(schema).toString()).getTypeMap()
+  const typeMap = utils
+    .buildSchema(fs.readFileSync(schema).toString())
+    .getTypeMap();
   const enums = Object.keys(typeMap)
     .reduce((p, name) => {
-      const type = typeMap[name]
-      if (!name.startsWith("__") && isEnumType(type)) {
+      const type = typeMap[name];
+      if (!name.startsWith('__') && isEnumType(type)) {
         p.push(
           `export const ${name} = {\n${type
             .getValues()
             .map(e => `  ${e.name}: "${e.name}"`)
-            .join(",\n")}\n};`
-        )
+            .join(',\n')}\n};`,
+        );
       }
-      return p
+      return p;
     }, [])
-    .sort()
+    .sort();
 
   fs.writeFileSync(
     output,
@@ -31,31 +33,34 @@ function main({ schema, output }) {
 /* eslint-disable */
 /* prettier-ignore-start */
 
-${enums.join("\n\n")}
+${enums.join('\n\n')}
 
-/* prettier-ignore-end */`
-  )
+/* prettier-ignore-end */`,
+  );
 
-  console.info(`Updated: ${output}`)
+  console.info(`Updated: ${output}`);
 }
 
-const yargs = require("yargs")
+const yargs = require('yargs');
 const argv = yargs
-  .usage("Generate Enums from a schema.graphql file\n\n" + "$0 --schema <path> --output <path>")
+  .usage(
+    'Generate Enums from a schema.graphql file\n\n' +
+      '$0 --schema <path> --output <path>',
+  )
   .options({
     schema: {
       array: false,
-      type: "string",
+      type: 'string',
       demandOption: true,
-      describe: "Path to schema.graphql"
+      describe: 'Path to schema.graphql',
     },
     output: {
       array: false,
-      type: "string",
+      type: 'string',
       demandOption: true,
-      describe: "Output file"
-    }
+      describe: 'Output file',
+    },
   })
-  .help().argv
+  .help().argv;
 
-main(argv)
+main(argv);

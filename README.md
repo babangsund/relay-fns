@@ -212,9 +212,9 @@ function MyComponent() {
 }
 
 // With a hoc
-import { withUpdate } from "relay-fns"
+import { withUpdateMutation } from "relay-fns"
 
-@withUpdate("Todo")
+@withUpdateMutation("Todo")
 class MyComponent extends React.Component {
 	runSomeMutation(input) {
 		this.props.updateMutation(MUTATION, input, CONFIG)
@@ -249,9 +249,9 @@ function MyComponent() {
 }
 
 // With a hoc
-import { withDelete } from "relay-fns"
+import { withDeleteMutation } from "relay-fns"
 
-@withDelete("Todo")
+@withDeleteMutation("Todo")
 class MyComponent extends React.Component {
 	runSomeMutation(input) {
 		this.props.deleteMutation(MUTATION, input, CONFIG)
