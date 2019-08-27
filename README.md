@@ -89,7 +89,7 @@ function MyComponent() {
   const fetchQuery = useFetchQuery();
   useEffect(() => {
     // Fetch some data
-    fetchQuery(QUERY, VARIABLEs);
+    fetchQuery(QUERY, VARIABLES);
   });
 }
 
