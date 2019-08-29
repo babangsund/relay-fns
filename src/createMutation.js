@@ -17,7 +17,7 @@
  *  }
  * )
  *
- * @ flow
+ * @flow
  */
 
 'use strict';

@@ -1,4 +1,22 @@
-// @flow
+/**
+ * @public
+ *
+ * Calls commitMutation with environment and returns a promise.
+ * Example usage:
+ *
+ * const commitMutation = useCommitMutation();
+ *
+ * commitMutation(
+ *   someMutation,
+ *   {
+ *     content: "Hello world"
+ *   }
+ * )
+ * .then((response) => console.info(response))
+ * .catch((error) => console.error(error));
+ *
+ * @flow
+ */
 
 'use strict';
 
