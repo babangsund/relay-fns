@@ -5,12 +5,14 @@
  * Example usage:
  *
  * function Example() {
- *   const { settings } = useLocalQuery(
+ *   const {viewer} = useLocalQuery(
  *     graphql`
  *       query ExampleQuery {
- *         __typename
- *         settings {
- *           kkstatus
+ *         viewer {
+ *           __typename
+ *           settings {
+ *             status
+ *           }
  *         }
  *       }
  *     `
