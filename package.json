@@ -1,66 +1,66 @@
 {
-  "name": "relay-fns",
+  "license": "MIT",
   "version": "1.0.0",
-  "description": "Relay functions",
-  "homepage": "https://github.com/babangsund/relay-fns",
+  "name": "relay-fns",
+  "author": "babangsund",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "scripts": {
-    "build": "NODE_ENV=production rollup -c",
-    "watch": "NODE_ENV=development rollup -c -w"
-  },
-  "bin": {
-    "relay-fns-enums": "./dist/bin/enums.js"
-  },
+  "description": "Relay functions",
+  "homepage": "https://github.com/babangsund/relay-fns",
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "react",
     "relay",
     "functions"
   ],
-  "files": [
-    "dist"
-  ],
-  "author": "babangsund",
-  "license": "MIT",
+  "bin": {
+    "relay-fns-enums": "./dist/bin/enums.js"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production rollup -c",
+    "watch": "NODE_ENV=development rollup -c -w"
+  },
   "dependencies": {
     "@babel/runtime": "^7.0.0"
   },
   "peerDependencies": {
     "graphql": "^14.0.0",
     "react": "^16.8.0",
-    "react-relay": "^5.0.0",
-    "relay-runtime": "^5.0.0"
+    "react-relay": "^7.0.0",
+    "relay-runtime": "^7.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/plugin-proposal-optional-chaining": "^7.6.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.6.3",
     "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-react": "^7.6.3",
     "babel-eslint": "^10.0.0",
     "babel-plugin-dev-expression": "^0.2.2",
-    "eslint": "^6.0.0",
-    "eslint-config-fbjs": "^3.0.0",
-    "eslint-config-prettier": "^6.0.0",
+    "eslint": "^6.6.0",
+    "eslint-config-fbjs": "^3.1.1",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-babel": "^5.0.0",
-    "eslint-plugin-flowtype": "^3.0.0",
+    "eslint-plugin-flowtype": "^4.3.0",
     "eslint-plugin-jsx-a11y": "^6.0.0",
-    "eslint-plugin-react": "^7.0.0",
-    "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
     "fbjs": "^1.0.0",
-    "flow-bin": "^0.102.0",
-    "graphql": "^14.0.0",
+    "flow-bin": "^0.111.1",
+    "graphql": "^14.5.8",
     "prettier": "^1.18.2",
-    "react": "^16.8.6",
-    "react-relay": "^5.0.0",
-    "relay-runtime": "^5.0.0",
-    "rollup": "^1.17.0",
+    "react": "^16.11.0",
+    "react-relay": "^7.0.0",
+    "relay-runtime": "^7.0.0",
+    "rollup": "^1.26.2",
     "rollup-plugin-babel": "^4.3.3",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-terser": "^5.1.1",
-    "yargs": "^13.3.0"
+    "rollup-plugin-terser": "^5.1.2",
+    "yargs": "^14.2.0"
   }
 }

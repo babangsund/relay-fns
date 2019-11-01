@@ -54,7 +54,10 @@ export function useUpdateMutation(): UpdateMutation {
 
   return React.useCallback(
     (mutation, input, config = {}) => {
-      const optimisticUpdater = makeOptimisticUpdater({input, ...config});
+      const optimisticUpdater = makeOptimisticUpdater({
+        input,
+        dataID: config.dataID,
+      });
       return commit(mutation, input, {...config, optimisticUpdater});
     },
     [commit, makeOptimisticUpdater],
